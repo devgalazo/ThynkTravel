@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@layer base {
+    /* Zerando margin e padding para todos os elementos */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+  }

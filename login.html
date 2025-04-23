@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet"> <!-- Garanta que o caminho está correto -->
+   
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script src="https://accounts.google.com/gsi/client" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title>ThynkTravel - Agência de viagem, pensou em viagem, pensou ThynkTravel</title>
+</head>
+
+<body class="bg-white font-['Inter']">
+    <!-- Banner -->
+    <div class="w-full">
+      <img src="/assets/bannerlogin.png" alt="ThynkTravel Logo" class="w-full h-auto" />
+    </div>
+  
+    <div class="flex flex-col md:flex-row w-full max-w-7xl mx-auto">
+      <!-- Sidebar -->
+      <aside class="w-full md:w-64 bg-[#0E7490] p-4 md:p-6 flex flex-col items-center md:items-start text-white font-bold">
+        <img src="/assets/perfil1.png" alt="Foto de perfil" class="w-20 h-20 md:w-24 md:h-24 rounded-full mb-4">
+        <p class="text-center md:text-left text-sm md:text-base">Nome do Usuário</p>
+        <nav class="mt-4 md:mt-6 w-full">
+          <ul class="space-y-2 md:space-y-4 text-sm md:text-base">
+            <li><a href="#" class="block px-4 py-2 border-b border-white hover:bg-[#1190B3] rounded">Editar perfil</a></li>
+            <li><a href="#" class="block px-4 py-2 border-b border-white hover:bg-[#1190B3] rounded">Favoritos</a></li>
+            <li><a href="#" class="block px-4 py-2 border-b border-white hover:bg-[#1190B3] rounded">Avaliar</a></li>
+            <li><a href="#" class="block px-4 py-2 border-b border-white hover:bg-[#1190B3] rounded">Criar pacote</a></li>
+            <li><a href="#" class="block px-4 py-2 border-b border-red-500 hover:bg-red-600 rounded">Logout</a></li>
+          </ul>
+        </nav>
+      </aside>
+  
+      <!-- Conteúdo Principal -->
+      <main class="flex-1 p-4 md:p-6 w-full max-w-6xl mx-auto">
+        <h1 class="text-xl md:text-2xl lg:text-3xl font-bold text-[#0E7490] py-4">Recomendados para você!</h1>
+  
+        <!-- Recomendados -->
+        <section class="grid grid-cols-1 gap-4">
+          <div class="bg-[#D9D9D9] p-4 rounded-lg shadow flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <img src="/assets/destino1.png" class="rounded-md w-full sm:w-20 h-auto sm:h-20 object-cover">
+            <div class="flex flex-col text-sm">
+              <p class="font-bold">Praia Grande</p>
+              <p class="text-xs text-gray-500">08/07/2023 - 12/07/2023</p>
+              <p class="text-sm text-gray-700">A partir de <strong class="text-black">R$ 200,00</strong></p>
+            </div>
+          </div>
+        </section>
+  
+        <!-- Atualizar dados -->
+        <section class="mt-8">
+          <h2 class="text-xl md:text-2xl lg:text-3xl font-bold text-[#0E7490]">Atualize seus dados:</h2>
+          <div class="grid grid-cols-1 gap-4 mt-4">
+            <div class="flex flex-col text-sm">
+              <label class="font-bold">Nome Completo:</label>
+              <input type="text" placeholder="Digite seu nome..." class="p-2 rounded-xl bg-[#F5F5F5] font-medium">
+            </div>
+            <div class="flex flex-col text-sm">
+              <label class="font-bold">Telefone:</label>
+              <input type="text" placeholder="(11) 99999-9999" class="p-2 rounded-xl bg-[#F5F5F5] font-medium">
+            </div>
+            <div class="flex flex-col text-sm">
+              <label class="font-bold">Passaporte:</label>
+              <input type="text" placeholder="JF236LK96" class="p-2 rounded-xl bg-[#F5F5F5] font-medium">
+            </div>
+            <div class="flex flex-col text-sm">
+              <label class="font-bold">Gênero:</label>
+              <input type="text" placeholder="Masculino" class="p-2 rounded-xl bg-[#F5F5F5] font-medium">
+            </div>
+            <div class="flex flex-col text-sm">
+              <label class="font-bold">Foto de perfil:</label>
+              <button class="bg-green-500 text-white py-2 px-4 rounded mt-2">Atualizar</button>
+            </div>
+          </div>
+        </section>
+  
+        <!-- Criar pacote -->
+        <section class="mt-8">
+          <h2 class="text-xl md:text-2xl lg:text-3xl font-bold text-[#0E7490]">Crie agora mesmo seu pacote:</h2>
+          <div class="grid grid-cols-1 gap-4 mt-4 text-sm">
+            <div class="flex flex-col">
+              <label class="font-bold">Nome do pacote:</label>
+              <input type="text" placeholder="Nome do pacote" class="p-2 rounded-xl bg-[#F5F5F5] font-medium">
+            </div>
+            <div class="flex flex-col">
+              <label class="font-bold">Destino:</label>
+              <input type="text" placeholder="Destino" class="p-2 rounded-xl bg-[#F5F5F5] font-medium">
+            </div>
+            <div class="flex flex-col">
+              <label class="font-bold">Preço:</label>
+              <input type="text" placeholder="Preço" class="p-2 rounded-xl bg-[#F5F5F5] font-medium">
+            </div>
+            <div class="flex flex-col">
+              <label class="font-bold">Desconto:</label>
+              <input type="text" placeholder="Desconto" class="p-2 rounded-xl bg-[#F5F5F5] font-medium">
+            </div>
+            <div class="flex flex-col">
+              <label class="font-bold">Data inicio:</label>
+              <input type="date" class="p-2 rounded-xl bg-[#F5F5F5] font-medium">
+            </div>
+            <div class="flex flex-col">
+              <label class="font-bold">Data fim:</label>
+              <input type="date" class="p-2 rounded-xl bg-[#F5F5F5] font-medium">
+            </div>
+            <div class="flex flex-col">
+              <label class="font-bold">Descrição:</label>
+              <textarea placeholder="Descrição dos serviços" class="border p-2 rounded bg-[#F5F5F5] font-medium"></textarea>
+              <button class="bg-green-500 text-white py-2 px-4 rounded mt-4">Salvar</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  
+    <script src="script.js"></script>
+  </body>
+  
+
+
+
+</html>

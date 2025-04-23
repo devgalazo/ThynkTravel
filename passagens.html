@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet"> <!-- Garanta que o caminho está correto -->
+   
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script src="https://accounts.google.com/gsi/client" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+    
+    <title>Document</title>
+</head>
+<body class="m-0 p-0">
+    <header class="bg-[#0B4F6C] w-full pb relative">
+        <div class="w-full h-full mx-auto flex justify-between items-center px-4 sm:w-[320px] sm:h-[220px] md:w-[744px] lg:w-[1201px]">
+          <div class="w-[127px] h-[113px] mx-auto">
+            <img src="/assets/ThynkTravel.png" alt="ThynkTravel Logo" />
+          </div>
+      
+          <div class=" gap-x-4 hidden">
+            <button class="modal-btn text-base font-bold font-['Inter'] text-white bg-[#0E7490] w-[139px] h-[37px] rounded-xl">
+              Login
+            </button>
+            <button class="modal-btn text-base font-bold font-['Inter'] text-white bg-[#10B981] w-[139px] h-[37px] rounded-xl">
+              Registrar
+            </button>
+          </div>
+        </div>
+      
+           <!-- AREA DE CADASTRO -->
+
+           <div id="modal-registrar" class="mbg-black/60 fixed inset-0 z-[99] hidden items-center justify-center">
+
+            <!-- WRAPPER NOVO ADICIONADO -->
+            <div class="w-full max-w-md sm:max-w-lg lg:max-w-xl max-h-[90vh] overflow-y-auto p-6">
+          
+              <div class="bg-[#0B4F6C] w-full p-6 md:p-8 rounded-xl shadow-2xl text-white animate-slide-in-left">
+                <!-- conteúdo continua igual -->
+          
+   
+
+                <div class="flex justify-end">
+                    <button id="close-modal-btn">
+                        <img src="/assets/cancel.png" alt="Thynk Travel Logo" class="w-8">
+                    </button>
+                </div>
+                <div class="text-center">
+                    <img src="/assets/ThynkTravel2.png" alt="Thynk Travel Logo" class="mx-auto w-30">
+                    <h2 class="text-2xl font-bold md:mt-4">Bem vindo!</h2>
+                    <p class="text-sm">Por favor, selecione um provedor para criar sua conta</p>
+                </div>
+        
+                <div class="flex justify-center gap-12 mt-4">
+
+
+                    <button class="bg-[#0B4F6C] border border-white p-1 px-2 md:px-8 rounded-lg"><img src="/assets/icon-apple.png" alt="Apple" class="w-6"></button>
+                    <div class="bg-[#0B4F6C] border border-white p-1 px-2 md:px-8 rounded-lg" id="buttonDiv"></div>
+                    <div class="bg-[#0B4F6C] border border-white p-1 px-2 md:px-8 rounded-lg" id="githubRegisterButton"></div>
+                </div>
+                
+        
+                <div class="relative flex items-center my-6 md:my-12">
+                    <hr class="w-full border-gray-400">
+                    <span class="absolute left-1/2 transform -translate-x-1/2 bg-[#0B4F6C] px-2">OU</span>
+                </div>
+        
+                <form id="cadastroForm" class="md:space-y-4">
+                    <div class="relative">
+                        <label class="block text-white">Nome Completo</label>
+                        <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo..." 
+                            class="w-full px-3 py-2 text-white border border-[#D9D9D9] rounded-lg focus:outline-none">
+                        <small id="erro-nome" class="text-red-500 text-sm block min-h-[1rem]"></small>
+                    </div>
+                  
+                    <div class="relative">
+                        <label class="block text-white">Email</label>
+                        <input type="email" id="email" name="email" autocomplete="username" placeholder="Digite seu Email..." 
+                            class="w-full px-3 py-2 text-white border border-[#D9D9D9] rounded-lg focus:outline-none">
+                        <small id="erro-email" class="text-red-500 text-sm block min-h-[1rem]"></small>
+                    </div>
+                  
+                    <div class="relative">
+                        <label class="block text-white">Crie uma senha</label>
+                        <input type="password" id="senha" name="senha" autocomplete="new-password" placeholder="*******" 
+                            class="w-full px-3 py-2 text-white border border-[#D9D9D9] rounded-lg focus:outline-none">
+                        <small id="erro-senha" class="text-red-500 text-sm block min-h-[1rem]"></small>
+                    </div>
+                  
+                    <div class="relative">
+                        <label class="block text-white">Confirme a senha</label>
+                        <input type="password" id="confirmar_senha" name="confirmar_senha" autocomplete="new-password" placeholder="*******"  
+                            class="w-full px-3 py-2 text-white border border-[#D9D9D9] rounded-lg focus:outline-none">
+                        <small id="erro-confirmar_senha" class="text-red-500 text-sm block min-h-[1rem]"></small>
+                    </div>
+                  
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" id="termos" class="h-4 w-4">
+                        <label for="termos" class="text-sm text-white">Aceito os termos e condições</label>
+                    </div>
+                  
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" id="manterConectado" class="h-4 w-4">
+                        <label for="manterConectado" class="text-sm text-white">Manter conectado</label>
+                    </div>
+                  
+                    <button type="submit" class="w-full bg-emerald-500 py-2 rounded-lg text-lg hover:bg-emerald-600 font-bold">Registrar</button>
+                </form>
+                
+                <p class="text-center text-sm mt-4">Já é cadastrado? <a href="login.html" class="text-emerald-300 font-bold">Fazer login</a></p>
+            </div>
+        </div>
+    </div>
+        <!-- AREA DE LOGIN-->
+         
+        <div class="bg-black/60 fixed inset-0 z-[99] hidden items-center justify-center" id="modal-login">
+
+            <div class="w-full max-w-md sm:max-w-lg lg:max-w-xl max-h-[90vh] overflow-y-auto p-6">
+          
+              <div class="bg-[#0B4F6C] w-full p-6 md:p-8 rounded-xl shadow-2xl text-white animate-slide-in-left">
+                <div class="flex justify-end">
+                    <button id="close-modal-btn1">
+                        <img src="/assets/cancel.png" alt="Thynk Travel Logo" class="w-8">
+                    </button>
+                </div>
+                <div class="text-center">
+                    <img src="/assets/ThynkTravel2.png" alt="Thynk Travel Logo" class="mx-auto w-30">
+                    <h2 class="text-2xl font-bold mt-4">Bem vindo!</h2>
+                    <p class="text-sm">Por favor, selecione um provedor para criar sua conta</p>
+                </div>
+        
+                <div class="flex justify-center gap-12 mt-4">
+
+
+                    <button class="bg-[#0B4F6C] border border-white p-1 px-2 md:px-8 rounded-lg"><img src="/assets/icon-apple.png" alt="Apple" class="w-6"></button>
+                    <div class="bg-[#0B4F6C] border border-white p-1 px-2 md:px-8 rounded-lg" id="googleLoginButton"></div>
+                    <div class="bg-[#0B4F6C] border border-white p-1 px-2 md:px-8 rounded-lg" id="githubLoginButton"></div>
+                </div>
+        
+                <div class="relative flex items-center my-12">
+                    <hr class="w-full border-gray-400">
+                    <span class="absolute left-1/2 transform -translate-x-1/2 bg-[#0B4F6C] px-2">OU</span>
+                </div>
+        
+                <form id="loginForm" class="space-y-4">
+                    <div class="relative">
+                      <label class="block text-white">Email</label>
+                      <input type="email" id="emailc" name="email" autocomplete="username" placeholder="Digite seu Email..." class="w-full px-3 py-2 text-white border border-[#D9D9D9] rounded-lg focus:outline-none">
+                    </div>
+            
+                    <div class="relative">
+                      <label class="block text-white">Digite sua senha</label>
+                      <input type="password" id="senhac" name="senha" autocomplete="current-password" placeholder="*******" class="w-full px-3 py-2 text-white border border-[#D9D9D9] rounded-lg focus:outline-none">
+                    </div>
+            
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="h-4 w-4">
+                      <span class="text-sm text-white">Manter conectado</span>
+                    </div>
+            
+                    <button type="submit" class="w-full bg-emerald-500 py-2 rounded-lg text-lg hover:bg-emerald-600 font-bold">ENTRAR</button>
+                  </form>
+                <p class="text-center text-sm mt-4">Já é cadastrado? <a href="login.html" class="text-emerald-300 font-bold">Fazer cadastro</a></p>
+           
+        
+            </div>
+        </div>
+</div>
+
+        <div class=" mx-auto max-w-[1200px] bg-white rounded-xl shadow-lg p-4 md:grid md:grid-cols-5 gap-4 text-center">
+          <!-- ORIGEM -->
+          <div>
+            <span class="font-['Inter'] text-[16px] text-gray-400">Localização</span>
+            <input id="origin" type="text" list="lista-origem" placeholder="De onde vai sair?" class="rounded-md w-full font-bold text-center text-black placeholder:font-bold placeholder:text-black" />
+            <datalist id="lista-origem"></datalist>
+          </div>
+          
+          <!-- DESTINO -->
+          <div>
+            <span class="font-['Inter'] text-[16px] text-gray-400">Destino</span>
+            <input id="destination" type="text" list="lista-destino" placeholder="Para onde vai?" class="rounded-md w-full font-bold text-center text-black placeholder:font-bold placeholder:text-black" />
+            <datalist id="lista-destino"></datalist>
+          </div>
+          
+          <!-- DATA DE PARTIDA -->
+          <div>
+            <span class="font-['Inter'] text-[16px] text-gray-400">Check-in / Check-out </span>
+            <input id="dateRange" placeholder="DD/MM/AAAA" class="rounded-md w-full font-bold text-center text-black placeholder:font-bold placeholder:text-black" />
+          </div>
+        
+          <!-- PASSAGEIROS -->
+          <div>
+            <span class="font-['Inter'] text-[16px] text-gray-400">N° Passageiros</span>
+            <input id="passengers" type="number" value="1" min="1" max="9" class="rounded-md w-full font-bold text-center" />
+          </div>
+      
+          <!-- BOTÃO -->
+          <div>
+            <button id="btn-buscar-voos" class="bg-emerald-500 text-white p-2 rounded-md w-full font-bold">
+              Procurar pacotes
+            </button>
+          </div>  
+        </div>
+      </header>
+      
+    <div class=" mx-auto max-w-[1200px]" id="resultado"></div>
+    
+    <script src="script.js"></script>
+    <script src="passagens.js" defer></script>
+</body>
+</html>

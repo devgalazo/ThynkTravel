@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet"> <!-- Garanta que o caminho está correto -->
+   
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script src="https://accounts.google.com/gsi/client" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+
+    <title>ThynkTravel - Agência de viagem, pensou em viagem, pensou ThynkTravel</title>
+</head>
+
+<body class="m-0 p-0">
+    
+<!--CABEÇALHO-->
+<header class="
+  bg-[url('/assets/banner-mobile.png')] bg-center bg-no-repeat w-[375px] h-[583px]
+  md:w-full md:h-[926px] md:bg-[url('/assets/banner-desktop.png')] md:bg-no-repeat md:bg-[length:100%_100%] md:bg-bottom md:overflow-hidden md:rounded-b-xl
+">
+
+    <!-- MODAL MENU MOBILE -->
+    
+<div class="flex md:hidden px-5">
+    <img 
+        src="/assets/menu.png" 
+        alt="ThynkTravel Logo"
+        id="openMenu" 
+        class="w-6 h-6 cursor-pointer" />
+</div>
+
+<!-- MODAL MENU MOBILE -->
+<div id="menuModal" class="fixed inset-0 z-50 bg-modal-bg hidden opacity-0 transition-opacity duration-500 ease-in-out backdrop-blur-sm animate-fade-in">
+    <div class="bg-white w-4/5 h-full p-6 flex flex-col gap-8 rounded-2xl shadow-modal animate-slide-in-left">
+        
+        <!-- Botão de Fechar -->
+        <div class="flex justify-end">
+            <button id="closeMenu" class="p-2 focus:outline-none rounded-md hover:bg-gray-100 transition-all duration-150 ease-in-out">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Links do Menu -->
+        <a href="index.html" class="text-lg font-semibold text-gray-800 hover:text-blue-600 focus:text-blue-600 transition-all duration-300 transform hover:scale-105">Início</a>
+        
+        <a href="javascript:void(0)" 
+        class="text-lg font-semibold text-gray-800 hover:text-blue-600 focus:text-blue-600 transition-all duration-300 transform hover:scale-105"
+        id="openRegisterModal">Cadastrar-se</a>
+
+        <a href="javascript:void(0)"
+        class="text-lg font-semibold text-gray-800 hover:text-blue-600 focus:text-blue-600 transition-all duration-300 transform hover:scale-105"
+        id="openLoginModal">Login</a>
+        
+    </div>
+</div>
+
+      
+
+    <div class="mx-auto flex justify-between items-center px-4 sm:w-[375px] sm:h-[113px] md:w-[744px] lg:w-[1201px]">
+            
+            <div class="hidden sm:flex w-[127px] h-[113px]">            
+            <img 
+            src="/assets/ThynkTravel.png" 
+            alt="ThynkTravel Logo"
+            /> 
+            </div>
+
+            <div class="hidden sm:flex gap-x-4">
+                <button class="modal-btn text-base font-bold font-['Inter'] text-white bg-[#0E7490] w-[139px] h-[37px] rounded-xl">
+                    Login
+                </button>
+
+                <button class="modal-btn text-base font-bold font-['Inter'] text-white bg-[#10B981] w-[139px] h-[37px] rounded-xl">
+                    Registrar
+                </button>
+            </div>            
+        </div>
+
+        
+        <!--FIM MENU-->
+    
+        <!-- AREA DE CADASTRO -->
+
+        <div id="modal-registrar" class="bg-black/60 fixed inset-0 z-[99] hidden items-center justify-center">
+
+            <div class="w-full max-w-md sm:max-w-lg lg:max-w-xl max-h-[90vh] overflow-y-auto p-6">
+          
+              <div class="bg-[#0B4F6C] w-full p-6 md:p-8 rounded-xl shadow-2xl text-white animate-slide-in-left">
+
+                <div class="flex justify-end">
+                    <button id="close-modal-btn">
+                        <img src="/assets/cancel.png" alt="Thynk Travel Logo" class="w-8">
+                    </button>
+                </div>
+                <div class="text-center">
+                    <img src="/assets/ThynkTravel2.png" alt="Thynk Travel Logo" class="mx-auto w-30">
+                    <h2 class="text-2xl font-bold md:mt-4">Bem vindo!</h2>
+                    <p class="text-sm">Por favor, selecione um provedor para criar sua conta</p>
+                </div>
+        
+                <div class="flex justify-center gap-12 mt-4">
+                    <button class="bg-[#0B4F6C] border border-white p-1 px-2 md:px-8 rounded-lg"><img src="/assets/icon-apple.png" alt="Apple" class="w-6"></button>
+                    <div class="bg-[#0B4F6C] border border-white p-1 px-2 md:px-8 rounded-lg" id="buttonDiv"></div>
+                    <div class="bg-[#0B4F6C] border border-white p-1 px-2 md:px-8 rounded-lg" id="githubRegisterButton"></div>
+                </div>
+        
+                <div class="relative flex items-center my-6 md:my-12">
+                    <hr class="w-full border-gray-400">
+                    <span class="absolute left-1/2 transform -translate-x-1/2 bg-[#0B4F6C] px-2">OU</span>
+                </div>
+        
+                <form id="cadastroForm" class="md:space-y-4">
+                    <div class="relative">
+                        <label class="block text-white">Nome Completo</label>
+                        <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo..." 
+                            class="w-full px-3 py-2 text-white border border-[#D9D9D9] rounded-lg focus:outline-none">
+                        <small id="erro-nome" class="text-red-500 text-sm block min-h-[1rem]"></small>
+                    </div>
+                  
+                    <div class="relative">
+                        <label class="block text-white">Email</label>
+                        <input type="email" id="email" name="email" autocomplete="username" placeholder="Digite seu Email..." 
+                            class="w-full px-3 py-2 text-white border border-[#D9D9D9] rounded-lg focus:outline-none">
+                        <small id="erro-email" class="text-red-500 text-sm block min-h-[1rem]"></small>
+                    </div>
+                  
+                    <div class="relative">
+                        <label class="block text-white">Crie uma senha</label>
+                        <input type="password" id="senha" name="senha" autocomplete="new-password" placeholder="*******" 
+                            class="w-full px-3 py-2 text-white border border-[#D9D9D9] rounded-lg focus:outline-none">
+                        <small id="erro-senha" class="text-red-500 text-sm block min-h-[1rem]"></small>
+                    </div>
+                  
+                    <div class="relative">
+                        <label class="block text-white">Confirme a senha</label>
+                        <input type="password" id="confirmar_senha" name="confirmar_senha" autocomplete="new-password" placeholder="*******"  
+                            class="w-full px-3 py-2 text-white border border-[#D9D9D9] rounded-lg focus:outline-none">
+                        <small id="erro-confirmar_senha" class="text-red-500 text-sm block min-h-[1rem]"></small>
+                    </div>
+                  
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" id="termos" class="h-4 w-4">
+                        <label for="termos" class="text-sm text-white">Aceito os termos e condições</label>
+                    </div>
+                  
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" id="manterConectado" class="h-4 w-4">
+                        <label for="manterConectado" class="text-sm text-white">Manter conectado</label>
+                    </div>
+                  
+                    <button type="submit" class="w-full bg-emerald-500 py-2 rounded-lg text-lg hover:bg-emerald-600 font-bold">Registrar</button>
+                </form>
+                
+                <p class="text-center text-sm mt-4">Já é cadastrado? <a href="login.html" class="text-emerald-300 font-bold">Fazer login</a></p>
+            </div>
+        </div>
+    </div>
+
+        <!-- AREA DE LOGIN-->    
+        <div class="bg-black/60 fixed inset-0 z-[99] hidden items-center justify-center" id="modal-login">
+
+            <div class="w-full max-w-md sm:max-w-lg lg:max-w-xl max-h-[90vh] overflow-y-auto p-6">
+          
+              <div class="bg-[#0B4F6C] w-full p-6 md:p-8 rounded-xl shadow-2xl text-white animate-slide-in-left">
+                <div class="flex justify-end">
+                    <button id="close-modal-btn1">
+                        <img src="/assets/cancel.png" alt="Thynk Travel Logo" class="w-8">
+                    </button>
+                </div>
+                <div class="text-center">
+                    <img src="/assets/ThynkTravel2.png" alt="Thynk Travel Logo" class="mx-auto w-30">
+                    <h2 class="text-2xl font-bold mt-4">Bem vindo!</h2>
+                    <p class="text-sm">Por favor, selecione um provedor para criar sua conta</p>
+                </div>
+        
+                <div class="flex justify-center gap-12 mt-4">
+
+
+                    <button class="bg-[#0B4F6C] border border-white p-1 px-2 md:px-8 rounded-lg"><img src="/assets/icon-apple.png" alt="Apple" class="w-6"></button>
+                    <div class="bg-[#0B4F6C] border border-white p-1 px-2 md:px-8 rounded-lg" id="googleLoginButton"></div>
+                    <div class="bg-[#0B4F6C] border border-white p-1 px-2 md:px-8 rounded-lg" id="githubLoginButton"></div>
+                </div>
+        
+                <div class="relative flex items-center my-12">
+                    <hr class="w-full border-gray-400">
+                    <span class="absolute left-1/2 transform -translate-x-1/2 bg-[#0B4F6C] px-2">OU</span>
+                </div>
+        
+                <form id="loginForm" class="space-y-4">
+                    <div class="relative">
+                      <label class="block text-white">Email</label>
+                      <input type="email" id="emailc" name="email" autocomplete="username" placeholder="Digite seu Email..." class="w-full px-3 py-2 text-white border border-[#D9D9D9] rounded-lg focus:outline-none">
+                    </div>
+            
+                    <div class="relative">
+                      <label class="block text-white">Digite sua senha</label>
+                      <input type="password" id="senhac" name="senha" autocomplete="current-password" placeholder="*******" class="w-full px-3 py-2 text-white border border-[#D9D9D9] rounded-lg focus:outline-none">
+                    </div>
+            
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" class="h-4 w-4">
+                      <span class="text-sm text-white">Manter conectado</span>
+                    </div>
+            
+                    <button type="submit" class="w-full bg-emerald-500 py-2 rounded-lg text-lg hover:bg-emerald-600 font-bold">ENTRAR</button>
+                  </form>
+                <p class="text-center text-sm mt-4">Já é cadastrado? <a href="login.html" class="text-emerald-300 font-bold">Fazer cadastro</a></p>
+            </div>
+        </div>
+</div>
+
+
+        <!-- INICIO MENU -->
+        <div class="w-full h-auto mx-auto flex flex-col mt-5 lg:w-[1201px]">
+  
+            <div class="w-[290px] h-[114px] md:w-[445px] ml-5 lg:w-[746px] md:h-[220px] lg:h-[290px]">
+              <h1 class="font-['Fjalla_One'] text-[28px] lg:text-[62px] text-white leading-tight">
+                Oferecemos os melhores pacotes de viagem para suas férias!
+              </h1>
+            </div>
+          
+            <div class="hidden sm:block text-white  w-[290px] md:w-[445px] lg:w-[746px] mt-4 md:text-base lg:text-lg">
+              <p>
+                A Agência de Viagens oferece serviços personalizados para quem busca destinos incríveis. Com nossos pacotes de viagem, você terá uma experiência única e inesquecível. Realize seus sonhos de viajar conosco!
+              </p>
+            </div>
+    
+            <div class="mx-auto md:mx-0 md:w-[476px] md:h-[69px] relative">
+                <img 
+                src="/assets/Rectangle31.png" 
+                alt="Tipo de viagem"
+                class="w-[272px] h-[39px] md:hidden"/>
+
+                <img 
+                src="/assets/retangulo1.png" 
+                alt="Tipo de viagem"
+                class="w-[476px] h-[69px] hidden md:block"/>
+
+                <div class="absolute inset-0 flex justify-between items-center">
+                    <button class="font-inter font-bold text-[16px] text-emerald-500 w-full inline-block border-b-4 border-emerald-500">
+                        Destino
+                    </button>
+                    <button class="font-inter font-bold text-[16px] text-emerald-500 w-full">
+                        Vôos
+                    </button>
+                    <button class="font-inter font-bold text-[16px] text-emerald-500 w-full">
+                        Cruzeiros
+                    </button>            
+                </div>
+            </div>
+
+            <div class="mx-auto md:mx:0 relative md:ml-0">
+                <img 
+                src="/assets/Rectangle17.png" 
+                alt="Tipo de viagem"
+                class="w-full md:hidden"
+                />
+
+                <img 
+                src="/assets/retangulo2.png" 
+                alt="Tipo de viagem"
+                class="w-[1189px] h-[116px] hidden md:block"
+                />
+                
+                <div class="absolute inset-0 flex flex-col gap-4 items-center text-center p-2
+                md:grid grid-cols-5
+                ">
+  
+                    <!-- ORIGEM -->
+                    <div>
+                      <span class="font-['Inter'] text-[16px] text-gray-400">Localização</span>
+                      <input id="origin" type="text" list="lista-origem" placeholder="De onde vai sair?" class="rounded-md w-full font-bold text-center text-black placeholder:font-bold placeholder:text-black" />
+                      <datalist id="lista-origem"></datalist>
+                    </div>
+                    
+                    <!-- DESTINO -->
+                    <div>
+                      <span class="font-['Inter'] text-[16px] text-gray-400">Destino</span>
+                      <input id="destination" type="text" list="lista-destino" placeholder="Para onde vai?" class="rounded-md w-full font-bold text-center text-black placeholder:font-bold placeholder:text-black" />
+                      <datalist id="lista-destino"></datalist>
+                    </div>
+                    
+                    <!-- DATA DE PARTIDA -->
+                    <div>
+                      <span class="font-['Inter'] text-[16px] text-gray-400">Check-in / Check-out </span>
+                      <input id="dateRange" placeholder="DD/MM/AAAA" class="rounded-md w-full font-bold text-center text-black placeholder:font-bold placeholder:text-black" />
+                    </div>
+                  
+                    <!-- PASSAGEIROS -->
+                    <div>
+                      <span class="font-['Inter'] text-[16px] text-gray-400">N° Passageiros</span>
+                      <input id="passengers" type="number" value="1" min="1" max="9" class="rounded-md w-full font-bold text-center" />
+                    </div>
+                
+                    <!-- BOTÃO -->
+                    <div>
+                      <button id="btn-buscar-voos" class="bg-emerald-500 text-white p-2 rounded-md w-full font-bold">
+                        Procurar pacotes
+                      </button>
+                    </div>         
+                  </div>                       
+                  </div>
+            </div>
+        </header>
+
+        <!-- CONTEUDO 1-->
+        <div class="w-[375px] mx-auto md:grid md:grid-cols-3 md:gap-6 md:px-4 md:w-[1201px] md:mt-36">
+    
+            <div class="flex flex-col col-span-2">
+               
+                <div class="mx-auto font-['Inter'] text-[14px] md:text-[18px] mt-5 w-[300px] md:w-[451px] text-[#374151]">
+                    <div class="font-['Fjalla_One'] text-[32px] md:text-[42px] text-black mt-10 md:mt-24 ">
+                        <p>
+                            Escolha os melhores
+                            <span class="block md:inline">destinos</span>
+                            <span class="block md:inline">na melhor agência</span>
+                          </p>
+                    </div>
+                    <p>Com a Agência de Viagens, você pode explorar os melhores destinos ao redor do mundo. 
+                        Oferecemos pacotes personalizados para destinos exóticos, praias paradisíacas, 
+                        cidades históricas e muito mais. Descubra novas culturas, experimente novos sabores e 
+                        crie memórias inesquecíveis em sua próxima viagem.</p>
+                </div>
+        
+                <div class= "font-['Fjalla_One'] text-[28px] md:text-[42px] text-[#0E7490] text-center mt-15 ">
+                    <p>Destinos mais procurados</p>
+                </div>
+
+                <div>
+                    <ul class="list-none flex flex-wrap gap-2 justify-center">
+                        <li class="font-['Fjalla_One'] text-[12px] md:text-[24px] text-center">
+                            <a href="" class="block">China</a>
+                        </li>
+                        <li class="font-['Fjalla_One'] text-[12px] md:text-[24px] text-center">
+                            <a href="" class="block">Moscow</a>
+                        </li>
+                        <li class="font-['Fjalla_One'] text-[12px] md:text-[24px] text-center">
+                            <a href="" class="block">Nova York</a>
+                        </li>
+                        <li class="font-['Fjalla_One'] text-[12px] md:text-[24px] text-center">
+                            <a href="" class="block">Tokyo</a>
+                        </li>
+                        <li class="font-['Fjalla_One'] text-[12px] md:text-[24px] text-center">
+                            <a href="" class="block">Seul</a>
+                        </li>
+                        <li class="font-['Fjalla_One'] text-[12px] md:text-[24px] text-center">
+                            <a href="" class="block">Alaska</a>
+                        </li>
+                        <li class="font-['Fjalla_One'] text-[12px] md:text-[24px] text-center">
+                            <a href="" class="block">Sidney</a>
+                        </li>
+
+                        <li class="w-full"></li> 
+                        <li class="font-['Fjalla_One'] text-[12px] md:text-[24px] text-center">
+                            <a href="" class="block">Paris</a>
+                        </li>
+                        <li class="font-['Fjalla_One'] text-[12px] md:text-[24px] text-center">
+                            <a href="" class="block">Suíça</a>
+                        </li>
+                        <li class="font-['Fjalla_One'] text-[12px] md:text-[24px] text-center">
+                            <a href="" class="block">Santiago</a>
+                        </li>
+                        <li class="font-['Fjalla_One'] text-[12px] md:text-[24px] text-center">
+                            <a href="" class="block">Rio de Janeiro</a>
+                        </li>
+                    </ul>
+                </div>        
+            </div>
+        
+            <!-- Segunda coluna (Imagens) -->
+            <div class="flex flex-col gap-4 col-span-1 items-end mt-5 p-5">
+                <div class="w-[230px] md:w-[289px] md:h-[219px] ">
+                    <img src="/assets/image1.png" alt="ThynkTravel Logo" class="w-full h-full object-cover"/>
+                </div>
+        
+                <div class="w-[230px] md:w-[289px] md:h-[219px]">
+                    <img src="/assets/image2.png" alt="ThynkTravel Logo" class="w-full h-full object-cover"/>
+                </div>
+        
+                <div class="w-[230px] md:w-[289px] md:h-[219px]">
+                    <img src="/assets/image3.png" alt="ThynkTravel Logo" class="w-full h-full object-cover"/>
+                </div>
+            </div>
+        </div>
+        <!-- FIM CONTEUDO 1 -->
+
+        <!-- COLUNA AVALIAÇÕES -->
+    <div class="mx-auto px-4 w-[375px] md:w-full md:h-auto lg:w-[1201px]"> 
+    <div>
+        <h1 class="font-['Fjalla_One'] text-[28px] md:text-[42px] text-[#0E7490] mx-auto text-center w-[297px] md:w-[521px] mt-5">Veja o que nossos clientes dizem <br> sobre nossos serviços</h1>
+    </div>
+
+    <div class="block sm:hidden mt-10 bg-gray-200 p-4 text-center w-[307px] mx-auto rounded-xl mb-4">
+        <div class="flex items-center justify-center mb-2">
+          <img src="/assets/art-1.png" alt="ThynkTravel Logo" class="w-[50px] h-[50px]" />
+          <h2 class="font-['Fjalla_One'] text-[24px] text-center pl-2">Livia Sanches</h2>
+        </div>
+        <h3 class="font-['Inter'] text-[16px] text-[#757575]">Destino: Maldivas</h3>
+        <p class="font-['Inter'] text-[16px] text-[#374151]">Inesquecível! A viagem foi incrível do começo ao fim.</p>
+        <a href="" class="block">⭐⭐⭐⭐⭐</a>
+      </div>
+
+    <div class="hidden sm:grid sm:grid-cols-3 gap-4 justify-center mt-16">
+        <div class="bg-gray-200 p-4 text-center w-[307px]  mx-auto rounded-xl">
+            <div class="flex items-center justify-center mb-2">
+                <img src="/assets/art-1.png" alt="ThynkTravel Logo" class="w-[50px] h-[50px]"/>
+                <h2 class="font-['Fjalla_One'] text-[24px] text-center pl-2">Livia Sanches</h2>
+            </div>
+            <h3 class="font-['Inter'] text-[16px] text-[#757575]">Destino: Maldivas</h3>
+            <p class="font-['Inter'] text-[16px] text-[#374151]">Inesquecível! A viagem foi incrível do começo ao fim.</p>
+            <a href="" class="block">⭐⭐⭐⭐⭐</a>
+        </div>
+        
+        <div class=" bg-gray-200 p-4 text-center w-[307px] mx-auto rounded-xl">
+            <div class="flex items-center justify-center mb-2">
+                <img src="/assets/art-2.png" alt="ThynkTravel Logo" class="w-[50px] h-[50px]"/>
+                <h2 class="font-['Fjalla_One'] text-[24px] text-center pl-2">Paulo Alberto</h2>
+            </div>
+            <h3 class="font-['Inter'] text-[16px] text-[#757575]">Destino: Paris</h3>
+            <p class="font-['Inter'] text-[16px] text-[#374151]">Inesquecível! A viagem foi incrível do começo ao fim.</p>
+            <a href="" class="block">⭐⭐⭐⭐⭐</a>
+        </div>
+    
+        <div class="bg-gray-200 p-4 text-center w-[307px]  mx-auto rounded-xl">
+            <div class="flex items-center justify-center mb-2">
+                <img src="/assets/art-3.png" alt="ThynkTravel Logo" class="w-[50px] h-[50px]"/>
+                <h2 class="font-['Fjalla_One'] text-[24px] text-center pl-2">Roberta Vasconcelos</h2>
+            </div>
+            <h3 class="font-['Inter'] text-[16px] text-[#757575]">Destino: Dubai</h3>
+            <p class="font-['Inter'] text-[16px] text-[#374151]">Inesquecível! A viagem foi incrível do começo ao fim.</p>
+            <a href="" class="block">⭐⭐⭐⭐⭐</a>
+        </div>
+
+         <div class="bg-gray-200 p-4 text-center w-[307px]  mx-auto rounded-xl">
+            <div class="flex items-center justify-center mb-2">
+                <img src="/assets/art-4.png" alt="ThynkTravel Logo" class="w-[50px] h-[50px]"/>
+                <h2 class="font-['Fjalla_One'] text-[24px] text-center pl-2">Joel Silva</h2>
+            </div>
+            <h3 class="font-['Inter'] text-[16px] text-[#757575]">Destino: Dinamarca</h3>
+            <p class="font-['Inter'] text-[16px] text-[#374151]">Inesquecível! A viagem foi incrível do começo ao fim.</p>
+            <a href="" class="block">⭐⭐⭐⭐⭐</a>
+        </div>
+        
+        <div class="bg-gray-200 p-4 text-center w-[307px]  mx-auto rounded-xl">
+            <div class="flex items-center justify-center mb-2">
+                <img src="/assets/art-5.png" alt="ThynkTravel Logo" class="w-[50px] h-[50px]"/>
+                <h2 class="font-['Fjalla_One'] text-[24px] text-center pl-2">Ramon Figueiredo</h2>
+            </div>
+            <h3 class="font-['Inter'] text-[16px] text-[#757575]">Destino: Croacia</h3>
+            <p class="font-['Inter'] text-[16px] text-[#374151]">Inesquecível! A viagem foi incrível do começo ao fim.</p>
+            <a href="" class="block">⭐⭐⭐⭐⭐</a>
+        </div>
+    
+        <div class="bg-gray-200 p-4 text-center w-[307px]  mx-auto rounded-xl">
+            <div class="flex items-center justify-center mb-2">
+                <img src="/assets/art-6.png" alt="ThynkTravel Logo" class="w-[50px] h-[50px]"/>
+                <h2 class="font-['Fjalla_One'] text-[24px] text-center pl-2">Vinicius Junior</h2>
+            </div>
+            <h3 class="font-['Inter'] text-[16px] text-[#757575]">Destino: Suiça</h3>
+            <p class="font-['Inter'] text-[16px] text-[#374151]">Inesquecível! A viagem foi incrível do começo ao fim.</p>
+            <a href="" class="block">⭐⭐⭐⭐⭐</a>
+        </div>
+    </div>
+</div>
+        <!--FIM COLUNA AVALIAÇÕES-->
+        
+            <div class="w-[300px] mx-auto px-4 md:w-full md:h-auto lg:w-[1201px] mt-10 md:mt-28"> 
+                <h1 class= "font-['Fjalla_One'] text-[32px] md:text-[42px] text-black text-center">Categorias populares</h1>
+            
+                <div class="flex justify-between w-[275px] md:w-[555px] h-[42px] mx-auto mt-5 md:mt-16">
+                    <button class="font-['Fjalla_One'] text-[18px] md:text-[32px] text-white bg-[#10B981] w-[65px] md:w-[139px] md:px-2 rounded-xl">
+                        Parques
+                    </button>
+                    <button class="font-['Fjalla_One'] text-[18px] md:text-[32px] text-[#757575]  text-center">
+                        Praias
+                    </button>
+                    <button class="font-['Fjalla_One'] text-[18px] md:text-[32px] text-[#757575]  text-center">
+                        Monumentos
+                    </button>     
+                </div>
+                
+
+                <div class="md:grid md:grid-cols-3 mt-10 text-center">
+                    <div class="flex flex-col items-center">
+                        <img 
+                        src="/assets/orlando.png" 
+                        alt="ThynkTravel Logo"
+                        /> 
+                
+                        <button class="bg-emerald-500 w-[249px] h-[48px] font-['Fjalla_One'] text-[32px] text-white rounded-md mt-4 mb-4">
+                            Ver Pacotes
+                        </button>
+                    </div>
+                
+                    <div class="flex flex-col items-center">
+                        <img 
+                        src="/assets/betocarreiro.png" 
+                        alt="ThynkTravel Logo"
+                        /> 
+                        <button class="bg-emerald-500 w-[249px] h-[48px] text-[32px] text-white rounded-md font-['Fjalla_One'] mt-4 mb-4">
+                            Ver Pacotes
+                        </button>
+                    </div>
+                
+                    <div class="flex flex-col items-center">
+                        <img 
+                        src="/assets/frança.png" 
+                        alt="ThynkTravel Logo"
+                        /> 
+                        <button class="bg-emerald-500 w-[249px] h-[48px] text-[32px] text-white rounded-md font-['Fjalla_One'] mt-4 mb-4">
+                            Ver Pacotes
+                        </button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>   
+        
+        <!--INICIO RODAPE-->
+        <div class="w-[375px] h-[432px] md:w-full md:h-[364px] bg-emerald-500 flex justify-center items-center mt-30">
+            <div class="w-[375px] md:w-[900px] md:flex md:justify-between md:items-center md:gap-x-[30px] text-white">
+                <!-- Formas de pagamento -->
+                <div class="md:flex md:flex-col md:items-center px-5 py-8">
+                    <span class="font-bold text-xl">Formas de pagamento</span>
+                    <div class="flex gap-4 mt-2">
+                        <img src="/assets/mastercard-logo.png" alt="Mastercard" class="w-[47px] h-[28px] md:h-10" />
+                        <img src="/assets/visa-logo.png" alt="Visa" class="w-[47px] h-[28px] md:h-10" />
+                        <img src="/assets/dinersclub-logo.png" alt="Diners Club" class="w-[47px] h-[17px] md:h-10" />
+                    </div>
+                </div>
+        
+                <!-- Redes sociais -->
+                <div class="flex flex-col md:items-center px-5 py-8">
+                    <span class="font-bold text-xl">Redes sociais</span>
+                    <div class="flex gap-4 mt-2">
+                        <img src="/assets/icon-facebook.png" alt="Facebook" class="h-10" />
+                        <img src="/assets/icon-instagram.png" alt="Instagram" class="h-10" />
+                        <img src="/assets/icon-tiktok.png" alt="TikTok" class="h-10" />
+                    </div>
+                </div>
+        
+                <!-- Televendas -->
+                <div class="flex flex-col md:items-center px-5 py-8">
+                    <span class="font-bold text-xl">Televendas</span>
+                    <span class="mt-2 text-lg">+55 9984-24879</span>
+                    <span class="text-sm">Seg a Sáb: 9 às 21h</span>
+                    <span class="text-sm">Dom: 10 às 16h</span>
+                </div>
+            </div>
+        </div>
+        <!-- FIM RODAPE-->
+         
+        <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js"></script>
+        <script src="script.js" defer></script>
+    </body>
+      
+</html>

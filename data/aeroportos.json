@@ -1,0 +1,122 @@
+[
+  {
+    "iata": "AMS",
+    "cidade": "Amsterdã",
+    "pais": "Países Baixos",
+    "nome": "Amsterdã"
+  },
+  {
+    "iata": "JTC",
+    "cidade": "Bauru",
+    "pais": "Brasil",
+    "nome": "Bauru"
+  },
+  {
+    "iata": "CNF",
+    "cidade": "Belo Horizonte",
+    "pais": "Brasil",
+    "nome": "Belo Horizonte"
+  },
+  {
+    "iata": "BSB",
+    "cidade": "Brasília",
+    "pais": "Brasil",
+    "nome": "Brasília"
+  },
+  {
+    "iata": "CDG",
+    "cidade": "Paris",
+    "pais": "França",
+    "nome": "Paris"
+  },
+  {
+    "iata": "CWB",
+    "cidade": "Curitiba",
+    "pais": "Brasil",
+    "nome": "Curitiba"
+  },
+  {
+    "iata": "DXB",
+    "cidade": "Dubai",
+    "pais": "Emirados Árabes Unidos",
+    "nome": "Dubai"
+  },
+  {
+    "iata": "FRA",
+    "cidade": "Frankfurt",
+    "pais": "Alemanha",
+    "nome": "Alemanha"
+  },
+  {
+    "iata": "FOR",
+    "cidade": "Fortaleza",
+    "pais": "Brasil",
+    "nome": "Fortaleza"
+  },
+  {
+    "iata": "GIG",
+    "cidade": "Rio de Janeiro",
+    "pais": "Brasil",
+    "nome": "Rio de Janeiro"
+  },
+  {
+    "iata": "GRU",
+    "cidade": "São Paulo",
+    "pais": "Brasil",
+    "nome": "São Paulo"
+  },
+  {
+    "iata": "HND",
+    "cidade": "Tóquio",
+    "pais": "Japão",
+    "nome": "Tóquio"
+  },
+  {
+    "iata": "JFK",
+    "cidade": "Nova York",
+    "pais": "Estados Unidos",
+    "nome": "Nova York"
+  },
+  {
+    "iata": "LAX",
+    "cidade": "Los Angeles",
+    "pais": "Estados Unidos",
+    "nome": "Los Angeles"
+  },
+  {
+    "iata": "LHR",
+    "cidade": "Londres",
+    "pais": "Reino Unido",
+    "nome": "Londres"
+  },
+  {
+    "iata": "MAD",
+    "cidade": "Madri",
+    "pais": "Espanha",
+    "nome": "Madrid"
+  },
+  {
+    "iata": "NRT",
+    "cidade": "Tóquio",
+    "pais": "Japão",
+    "nome": "Tóquio"
+  },
+  {
+    "iata": "POA",
+    "cidade": "Porto Alegre",
+    "pais": "Brasil",
+    "nome": "Porto Alegre"
+  },
+  {
+    "iata": "REC",
+    "cidade": "Recife",
+    "pais": "Brasil",
+    "nome": "Recife"
+  },
+  {
+    "iata": "SSA",
+    "cidade": "Salvador",
+    "pais": "Brasil",
+    "nome": "Salvador"
+  }
+]
