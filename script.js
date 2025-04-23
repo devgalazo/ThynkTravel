@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const meuBotao = document.getElementById("meuBotao");
     if (meuBotao) {
         meuBotao.addEventListener("click", () => {
-            window.location.href = "passagem.html";
+            window.location.href = "https://thynktravel.vercel.app/passagem.html";
         });
     }
 
@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!valido) return;
 
             // Envia para o servidor
-            fetch('http://localhost:3000/api/cadastrar', {
+            fetch('https://thynktravel.vercel.app/api/cadastrar', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ nome: nome.value, email: email.value, senha: senha.value })
@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             try {
-                const response = await fetch("http://localhost:3000/api/login", {
+                const response = await fetch("https://thynktravel.vercel.app/api/login", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ emailc: emailLogin, senhac: senhaLogin })
@@ -259,7 +259,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const data = jwt_decode(response.credential);
         console.log("Usuário logado:", data);
 
-        fetch("http://localhost:3000/api/google", {
+        fetch("https://thynktravel.vercel.app/api/google", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -325,7 +325,7 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
 
         button.onclick = () => {
-            window.location.href = "http://127.0.0.1:3000/auth/github";
+            window.location.href = "https://thynktravel.vercel.app/auth/github";
         };
 
         container.appendChild(button);
@@ -433,7 +433,7 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             // Enviando a requisição para a API com os parâmetros corretos
             console.log("Enviando requisição para a API...");
-            const resposta = await fetch(`http://localhost:3000/api/voos?origem=${origem}&destino=${destino}&departureDate=${departureDate}&returnDate=${returnDate}&adultos=${adultos}`);
+            const resposta = await fetch(`https://thynktravel.vercel.app/api/voos?origem=${origem}&destino=${destino}&departureDate=${departureDate}&returnDate=${returnDate}&adultos=${adultos}`);
             
             console.log("Resposta recebida da API");
             const dados = await resposta.json();
@@ -444,7 +444,7 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.setItem("resultadosVoos", JSON.stringify(dados));
     
             // Redireciona para a página de resultados
-            window.location.href = "passagens.html";
+            window.location.href = "https://thynktravel.vercel.app/passagens.html";
     
             // Renderiza os resultados na página
             renderizarResultados(dados);
