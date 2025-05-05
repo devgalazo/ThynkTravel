@@ -82,6 +82,7 @@ exports.loginComGoogle = (req, res) => {
         if (results.length > 0) {
             const usuario = results[0];
 
+            // Verifica se já existe login social vinculado
             connection.query(
                 "SELECT * FROM logins_sociais WHERE usuario_id = ? AND provider = ?",
                 [usuario.id, provider],
@@ -89,25 +90,35 @@ exports.loginComGoogle = (req, res) => {
                     if (err) return res.status(500).json({ error: 'Erro ao verificar login social.' });
 
                     if (social.length === 0) {
+                        // Se ainda não está vinculado, faz o vínculo
                         connection.query(
                             "INSERT INTO logins_sociais (usuario_id, provider, provider_id) VALUES (?, ?, ?)",
                             [usuario.id, provider, provider_id],
                             (err) => {
                                 if (err) return res.status(500).json({ error: 'Erro ao vincular login social.' });
+
+                                // Após vincular, gera e retorna token
+                                const token = jwt.sign(
+                                    { id: usuario.id, nome: usuario.nome, email: usuario.email },
+                                    process.env.JWT_SECRET,
+                                    { expiresIn: '2h' }
+                                );
+                                return res.json({ success: true, token });
                             }
                         );
+                    } else {
+                        // Já está vinculado, apenas retorna o token
+                        const token = jwt.sign(
+                            { id: usuario.id, nome: usuario.nome, email: usuario.email },
+                            process.env.JWT_SECRET,
+                            { expiresIn: '2h' }
+                        );
+                        return res.json({ success: true, token });
                     }
-
-                    const token = jwt.sign(
-                        { id: usuario.id, nome: usuario.nome, email: usuario.email },
-                        process.env.JWT_SECRET,
-                        { expiresIn: '2h' }
-                    );
-
-                    return res.json({ success: true, token });
                 }
             );
         } else {
+            // Usuário ainda não existe, cria novo
             connection.query(
                 "INSERT INTO usuarios (nome, email) VALUES (?, ?)",
                 [nome, email],
@@ -116,6 +127,7 @@ exports.loginComGoogle = (req, res) => {
 
                     const usuario_id = result.insertId;
 
+                    // Após criar usuário, vincula login social
                     connection.query(
                         "INSERT INTO logins_sociais (usuario_id, provider, provider_id) VALUES (?, ?, ?)",
                         [usuario_id, provider, provider_id],
@@ -127,14 +139,15 @@ exports.loginComGoogle = (req, res) => {
                                 process.env.JWT_SECRET,
                                 { expiresIn: '2h' }
                             );
-
-                            return res.status(201).json({ success: true, token });    }
+                            return res.status(201).json({ success: true, token });
+                        }
                     );
                 }
             );
         }
     });
 };
+
 
 
 let amadeusToken = null;
